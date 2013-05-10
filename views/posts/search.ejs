@@ -1,0 +1,40 @@
+<h1>Buscar Post</h1>
+
+	<form method='post' action='/posts/search'>
+	 	<input type='hidden' name='_method' value='get'>
+  		<input type='text' name='txtBuscar' value='Introduzca texto'>
+  		<input type='submit' value='Buscar'>
+	</form>
+<% if(txtBuscar){ %>
+	<p> Resultados de "<%=txtBuscar%>": </p>
+	<% if(posts.length == 0){ %>
+		<p> No hubo resultados.</p>
+	<% }; %>
+
+	<% for (var i in posts) { %>
+	  <article>
+	     <header>
+	        <h3>
+	          <a href='/posts/<%= posts[i].id %>' class='titlelink'> <%= posts[i].title %> </a>
+	        </h3>
+	     </header>
+	     
+	     <p>
+	        <%= posts[i].body.slice(0,300) %> ... 
+	     </p>
+
+	     <footer>
+	        <form method='post' action='/posts/<%= posts[i].id %>'>
+	          <input type='hidden' name='_method' value='delete'>
+	          <a href="/posts/<%= posts[i].id %>/edit"> Editar </a> 
+	          <a href="" onclick="submit();return false"> Borrar </a>  
+	        </form>
+	     </footer>
+	  </article>
+	<%  }; %>
+<% } else { %>
+	<p> Introduzca el texto que contenga el título o contenido del post.</p>
+<% }; %>
+
+<footer>
+<a href="/"> Volver </a>
